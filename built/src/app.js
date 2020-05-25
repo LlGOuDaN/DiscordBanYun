@@ -44,12 +44,11 @@ var App = /** @class */ (function () {
                     _this.sendRandom(client);
             }
         });
-        client.login('NzE0MjQ4NjI3NjAxNTM5MTEz.Xsr6Dg.78eXTxgcnmMQaN1ewDMl8nGjMN4');
+        client.login(process.env.DISCORD_BOT_TOKEN);
     };
     App.prototype.sendR18Img = function (client, mode, index) {
         var channel = client.channels.cache.get(HChannelId);
         var pix = new pixiv_app_api_1.default();
-        console.info(process.env.PIXIV_USERNAME);
         pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD).then(function () {
             pix.illustRanking({ mode: mode || 'week_r18' }).then(function (json) {
                 var illusts = json.illusts;

@@ -20,7 +20,7 @@ class App {
       }
     })
 
-    client.login('NzE0MjQ4NjI3NjAxNTM5MTEz.Xsr6Dg.78eXTxgcnmMQaN1ewDMl8nGjMN4')
+    client.login(process.env.DISCORD_BOT_TOKEN)
   }
 
   private sendR18Img (client: Client, mode?: any, index?: number) {
