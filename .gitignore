@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+#r18 png
+./r18.png
