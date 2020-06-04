@@ -108,4 +108,4 @@ r18.png
 
 
 # ts built files
-./built/*
+built/
