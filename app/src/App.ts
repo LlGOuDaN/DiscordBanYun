@@ -44,7 +44,7 @@ class App {
   private async searchIllustration (pix: Pix, tag: string, numOfFavs: string) {
     await pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
     const randomOffset = datefns.getMilliseconds(new Date())
-    const searchTag = numOfFavs + 'users入り R-18 ' + tag
+    const searchTag = numOfFavs + 'users入り R-18 -腐向け ' + tag
     const json = await pix.searchIllust(searchTag, { offset: randomOffset, type: 'illust' })
     return json
   }
