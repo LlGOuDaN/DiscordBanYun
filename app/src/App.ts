@@ -6,7 +6,7 @@ import * as datefns from 'date-fns'
 let HChannelId = '547540063584518144'
 const TestChannelId = '719346869611790376'
 
-const testing = true
+const testing = false
 
 class App {
     public run() {
@@ -47,6 +47,10 @@ class App {
                 illusts.push(...json.illusts)
             }
         )
+        if (illusts.length==0){
+            await channel.send('没找到图 1551')
+            return
+        }
         const randomIndex = Math.floor(Math.random() * illusts.length)
         await PixImg(illusts[index || randomIndex].imageUrls.large, './r18.png')
         await channel.send({files: ['./r18.png']})
@@ -78,13 +82,17 @@ class App {
         await pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
         let trendingResult = await pix.trendingTagsIllust({mode: 'day_r18'})
         let tagList = trendingResult['trendTags'] as any[]
+        if (tagList.length==0){
+            await channel.send('没找到Tag 1551')
+            return
+        }
         let output = "Daily R-18 Trending Tags:\n"
         tagList.forEach(tagInfo => {
                 output += tagInfo['tag'] + '\n'
             }
         )
-        console.log(output)
-        channel.send(output)
+        // console.log(output)
+        await channel.send(output)
     }
 
     private async autoComplete(client: Client, tag: string) {
@@ -93,7 +101,11 @@ class App {
         await pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
         let autoCompleteResult = await pix.searchAutoComplete(tag)
         let tagList = autoCompleteResult.searchAutoCompleteKeywords
-        channel.send(tagList)
+        if (tagList.length==0){
+            await channel.send('没找到Tag 1551')
+            return
+        }
+        await channel.send(tagList)
     }
 
     private async sendDailyR18Img(client: Client) {
