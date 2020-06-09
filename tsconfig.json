@@ -6,6 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "rootDir": "./app",
     "outDir": "./built",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
   }
 }
