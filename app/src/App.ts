@@ -79,7 +79,7 @@ class App {
         )
         output=output.substring(0,output.length-2)
         output+="\n"
-        output+="Number of Favourites: "+illusts[randomIndex].totalBookmarks+"\n"
+        output+="Number of Favorites: "+illusts[randomIndex].totalBookmarks+"\n"
         output+="https://www.pixiv.net/artworks/" + illusts[randomIndex].id
         await channel.send(output)
     }
