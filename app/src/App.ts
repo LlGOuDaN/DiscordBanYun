@@ -6,7 +6,7 @@ import * as datefns from 'date-fns'
 let HChannelId = '547540063584518144'
 const TestChannelId = '719346869611790376'
 
-const testing = false
+const testing = true
 
 class App {
     public run() {
@@ -36,9 +36,12 @@ class App {
         client.login(process.env.DISCORD_BOT_TOKEN)
     }
 
-    private async searchImg(client: Client, tag?: string, index?: number) {
+    private async searchImg(client: Client, tag?: string) {
         const illusts = []
-        const follows = ['1000', '5000', '10000', '50000']
+        let follows = ['1000', '5000', '10000', '50000','100000']
+        if (!tag){
+            follows = ['10000', '50000','100000']
+        }
         // const follows = ['1000']
         const channel = client.channels.cache.get(HChannelId) as TextChannel
         const pix = new Pix()
@@ -47,20 +50,45 @@ class App {
                 illusts.push(...json.illusts)
             }
         )
-        if (illusts.length==0){
+        if (illusts.length == 0) {
             await channel.send('没找到图 1551')
             return
         }
-        const randomIndex = Math.floor(Math.random() * illusts.length)
-        await PixImg(illusts[index || randomIndex].imageUrls.large, './r18.png')
+        let randomIndex = Math.floor(Math.random() * illusts.length)
+        let validImage = false
+            for (let i = 0; i < illusts.length; i++) {
+                randomIndex++
+                if (illusts[(randomIndex) % illusts.length].totalBookmarks >= 1000) {
+                    validImage = true
+                    break;
+                }
+            }
+        if (!validImage) {
+            await channel.send('没找到图 1551')
+            return
+        }
+
+        await PixImg(illusts[randomIndex].imageUrls.large, './r18.png')
         await channel.send({files: ['./r18.png']})
+        let output = ""
+        output+=illusts[randomIndex].title+"\n"
+        let tagList = illusts[randomIndex].tags
+        tagList.forEach(tagInfo => {
+            output += tagInfo.name + ', '
+            }
+        )
+        output=output.substring(0,output.length-2)
+        output+="\n"
+        output+="Number of Favourites: "+illusts[randomIndex].totalBookmarks+"\n"
+        output+="https://www.pixiv.net/artworks/" + illusts[randomIndex].id
+        await channel.send(output)
     }
 
     private async searchIllustration(pix: Pix, tag: string, numOfFavs: string) {
         await pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
         let randomOffset = datefns.getMilliseconds(new Date())
         randomOffset = Math.floor(randomOffset)
-        const searchTag = numOfFavs + 'users入り R-18 -腐向け ' + tag
+        const searchTag = numOfFavs + 'users入り R-18 -腐向け -創作BL -R-18G' + tag
         let json = null
         do {
             // console.log(randomOffset)
@@ -69,7 +97,7 @@ class App {
             if (randomOffset > 0) {
                 randomOffset /= 2;
                 randomOffset = Math.floor(randomOffset)
-            }else{
+            } else {
                 break
             }
         } while (json.illusts.length == 0)
@@ -82,7 +110,7 @@ class App {
         await pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
         let trendingResult = await pix.trendingTagsIllust({mode: 'day_r18'})
         let tagList = trendingResult['trendTags'] as any[]
-        if (tagList.length==0){
+        if (tagList.length == 0) {
             await channel.send('没找到Tag 1551')
             return
         }
@@ -101,7 +129,7 @@ class App {
         await pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
         let autoCompleteResult = await pix.searchAutoComplete(tag)
         let tagList = autoCompleteResult.searchAutoCompleteKeywords
-        if (tagList.length==0){
+        if (tagList.length == 0) {
             await channel.send('没找到Tag 1551')
             return
         }
