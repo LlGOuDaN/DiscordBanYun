@@ -94,7 +94,7 @@ class App {
     randomOffset = Math.floor(randomOffset)
     const searchTag = numOfFavs + 'users入り R-18 -腐向け -創作BL -R-18G' + tag
     let json = null
-    while (!json.illusts.length) {
+    while (!json || !json.illusts.length) {
       json = await pix.searchIllust(searchTag, { offset: randomOffset, type: 'illust' })
       if (randomOffset > 0) {
         randomOffset /= 2
