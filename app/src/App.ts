@@ -7,7 +7,7 @@ import NekoClient from 'nekos.life'
 let HChannelId = '547540063584518144'
 const TestChannelId = '719346869611790376'
 const blockedTag = ' -腐向け -創作BL -R-18G -ヒ腐マイ '
-const testing = true
+const testing = false
 
 class App {
   public run () {
