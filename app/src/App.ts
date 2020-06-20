@@ -18,6 +18,7 @@ class App {
     client.once('ready', () => {
       const channel = client.channels.cache.get(HChannelId) as TextChannel
       channel.send('搬运开始了')
+      this.sendDailyR18Img(client)
       this.setupScheduledSent(client)
     })
     // this.getSource()
@@ -70,17 +71,21 @@ class App {
 
     await PixImg(illusts[randomIndex].imageUrls.large, './r18.png')
     await channel.send({ files: ['./r18.png'] })
+    await this.sendImageInfo(illusts[randomIndex], channel)
+  }
+
+  private async sendImageInfo (illust: any, channel: any) {
     let output = ''
-    output += illusts[randomIndex].title + '\n'
-    const tagList = illusts[randomIndex].tags
+    output += illust.title + '\n'
+    const tagList = illust.tags
     tagList.forEach(tagInfo => {
       output += tagInfo.name + ', '
     }
     )
     output = output.substring(0, output.length - 2)
     output += '\n'
-    output += 'Number of Favorites: ' + illusts[randomIndex].totalBookmarks + '\n'
-    output += 'https://www.pixiv.net/artworks/' + illusts[randomIndex].id
+    output += 'Number of Favorites: ' + illust.totalBookmarks + '\n'
+    output += 'https://www.pixiv.net/artworks/' + illust.id
     await channel.send(output)
   }
 
@@ -136,6 +141,7 @@ class App {
 
   private async sendDailyR18Img (client: Client) {
     const channel = client.channels.cache.get(HChannelId) as TextChannel
+    await channel.send('每日任务？')
     const pix = new Pix()
     await pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
     const json = await pix.illustRanking({ mode: 'week_r18' })
@@ -143,6 +149,7 @@ class App {
     const randomIndex = datefns.getDay(new Date()) % 30
     await PixImg(illusts[randomIndex].imageUrls.large, './r18.png')
     await channel.send({ files: ['./r18.png'] })
+    await this.sendImageInfo(illusts[randomIndex], channel)
   }
 
   private sendRandom (client: Client) {
@@ -152,8 +159,6 @@ class App {
   private setupScheduledSent (client: Client, timePeriod?: number) {
     const DayInMilliseconds = 1000 * 60 * 60 * 24
     client.setInterval(() => {
-      const channel = client.channels.cache.get(HChannelId) as TextChannel
-      channel.send('每日任务？')
       this.sendDailyR18Img(client)
     }, timePeriod || DayInMilliseconds)
   }
