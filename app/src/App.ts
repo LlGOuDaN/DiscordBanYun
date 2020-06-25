@@ -6,7 +6,6 @@ import NekoClient from 'nekos.life'
 
 let HChannelId = '547540063584518144'
 const TestChannelId = '719346869611790376'
-const blockedTag = ' -腐向け -創作BL -R-18G -ヒ腐マイ '
 const testing = false
 
 class App {
@@ -24,8 +23,11 @@ class App {
     // this.getSource()
     client.on('message', message => {
       const inputMessage = message.content
+      if ((!testing || message.channel.id !== TestChannelId) && (testing || message.channel.id !== HChannelId)) {
+        return
+      }
       if (inputMessage === '!pic') {
-        this.sendRandom(client)
+        this.searchImg(client)
       } else if (inputMessage.match(/!search \w*/g)) {
         this.searchImg(client, inputMessage.substring(8))
       } else if (inputMessage.match(/!tag \w*/g)) {
@@ -36,16 +38,21 @@ class App {
         this.sendSoloGif(client)
       } else if (inputMessage === '!solo') {
         this.sendSolo(client)
+      } else if (inputMessage === '!pictag') {
+        this.searchImg(client, '', true)
       }
     })
 
     client.login(process.env.DISCORD_BOT_TOKEN)
   }
 
-  private async searchImg (client: Client, tag?: string) {
+  private async searchImg (client: Client, tag?: string, withTag?: boolean) {
     let follows = '0'
     if (!tag) {
       follows = '00'
+    }
+    if (withTag) {
+      tag += process.env.PIXIV_TAG
     }
     const channel = client.channels.cache.get(HChannelId) as TextChannel
     const pix = new Pix()
@@ -93,7 +100,7 @@ class App {
     await pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
     let randomOffset = datefns.getMilliseconds(new Date())
     randomOffset = Math.floor(randomOffset)
-    const searchTag = numOfFavs + '00users入り R-18 ' + blockedTag + tag
+    const searchTag = numOfFavs + '00users入り R-18 ' + process.env.PIXIV_BLOCK_TAG + ' ' + tag
     let json = null
     while (!json || !json.illusts.length) {
       json = await pix.searchIllust(searchTag, { offset: randomOffset, type: 'illust' })
@@ -150,10 +157,6 @@ class App {
     await PixImg(illusts[randomIndex].imageUrls.large, './r18.png')
     await channel.send({ files: ['./r18.png'] })
     await this.sendImageInfo(illusts[randomIndex], channel)
-  }
-
-  private sendRandom (client: Client) {
-    this.searchImg(client)
   }
 
   private setupScheduledSent (client: Client, timePeriod?: number) {
