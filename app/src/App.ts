@@ -6,7 +6,7 @@ import NekoClient from 'nekos.life'
 
 let HChannelId = '547540063584518144'
 const TestChannelId = '719346869611790376'
-const testing = false
+const testing = true
 
 class App {
   public run () {
@@ -52,7 +52,8 @@ class App {
       follows = '00'
     }
     if (withTag) {
-      tag += process.env.PIXIV_TAG
+      const lspTags = process.env.PIXIV_TAG.split('%').join(' ')
+      tag += lspTags
     }
     const channel = client.channels.cache.get(HChannelId) as TextChannel
     const pix = new Pix()
@@ -100,7 +101,9 @@ class App {
     await pix.login(process.env.PIXIV_USERNAME, process.env.PIXIV_PASSWORD)
     let randomOffset = datefns.getMilliseconds(new Date())
     randomOffset = Math.floor(randomOffset)
-    const searchTag = numOfFavs + '00users入り R-18 ' + process.env.PIXIV_BLOCK_TAG + ' ' + tag
+    const blockTag = process.env.PIXIV_BLOCK_TAG.split('%').join(' ')
+    const searchTag = numOfFavs + '00users入り R-18 ' + blockTag + ' ' + tag
+    console.info(searchTag)
     let json = null
     while (!json || !json.illusts.length) {
       json = await pix.searchIllust(searchTag, { offset: randomOffset, type: 'illust' })
