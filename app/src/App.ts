@@ -6,7 +6,7 @@ import NekoClient from 'nekos.life'
 
 let HChannelId = '547540063584518144'
 const TestChannelId = '719346869611790376'
-const testing = false
+const testing = true
 
 class App {
   public run () {
@@ -52,8 +52,12 @@ class App {
       follows = '00'
     }
     if (withTag) {
-      const lspTags = process.env.PIXIV_TAG.split('%').join(' ')
-      tag += lspTags
+      const lspTags = process.env.PIXIV_TAG.split('%')
+      const randomTagIndex = Math.floor(Math.random() * lspTags.length)
+      console.log(lspTags)
+      console.log(randomTagIndex)
+      console.log(lspTags[randomTagIndex])
+      tag += lspTags[randomTagIndex] + ' '
     }
     const channel = client.channels.cache.get(HChannelId) as TextChannel
     const pix = new Pix()
