@@ -18,5 +18,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            whoami
+            cd ./DiscordBanYun
+            ls
+            git pull
         
