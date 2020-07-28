@@ -19,6 +19,10 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             cd ./DiscordBanYun
-            ls
             git pull
+            docker build -t local .
+            cd ..
+            docker-compose up -d
+            
+            
         
