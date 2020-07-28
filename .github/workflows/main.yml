@@ -1,0 +1,22 @@
+# This is a basic workflow to help you get started with Actions
+
+name: deploy
+
+
+on:
+  push:
+    branches: 
+      - master
+jobs:
+  deploy_app:
+    name: deploy to ec2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            whoami
+        
