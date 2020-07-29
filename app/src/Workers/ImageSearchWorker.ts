@@ -15,8 +15,9 @@ class ImageSearchWorker {
       follows = '00'
     }
     if (withTag) {
-      const lspTags = process.env.PIXIV_TAG.split('%').join(' ')
-      tag += lspTags
+      const lspTags = process.env.PIXIV_TAG.split('%')
+      const randomTagIndex = Math.floor(Math.random() * lspTags.length)
+      tag += lspTags[randomTagIndex] + ' '
     }
     const channel = client.channels.cache.get(this.HChannelId) as TextChannel
     const pix = new Pix()
@@ -64,6 +65,7 @@ class ImageSearchWorker {
     randomOffset = Math.floor(randomOffset)
     const blockTag = process.env.PIXIV_BLOCK_TAG.split('%').join(' ')
     const searchTag = numOfFavs + '00users入り R-18 ' + blockTag + ' ' + tag
+    console.info(searchTag)
     let json = null
     while (!json || !json.illusts.length) {
       json = await pix.searchIllust(searchTag, { offset: randomOffset, type: 'illust' })
