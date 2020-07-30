@@ -8,7 +8,7 @@ class ActionHandler {
      this.client = client
    }
 
-   public handle (channelId: string) {
+   public async handle (channelId: string) {
      console.info('No Command Match on ' + channelId)
    }
 

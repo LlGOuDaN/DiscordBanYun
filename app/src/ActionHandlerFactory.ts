@@ -39,8 +39,8 @@ class ActionHandlerFactory {
       if (this.inputMessage === '!pictag') {
         return new PicTagActionHandler(this.client)
       }
-      if (this.inputMessage === '!+1') {
-        return new RepeatActionHandler(this.client)
+      if (this.inputMessage.match(/!\+\d*/g)) {
+        return new RepeatActionHandler(this.client, parseInt(this.inputMessage.substring(2)))
       }
       return new ActionHandler(this.client)
     }

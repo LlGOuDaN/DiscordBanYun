@@ -2,9 +2,9 @@ import ActionHandler from './ActionHandler'
 import TrendTagsWorker from '../Workers/TrendTagsWorker'
 
 class TrendActionHandler extends ActionHandler {
-  public handle (channelId: string) {
+  public async handle (channelId: string) {
     const trendTagsWorker = new TrendTagsWorker(channelId)
-    trendTagsWorker.trendTags(this.client)
+    await trendTagsWorker.trendTags(this.client)
   }
 
   public isRecallable () {
