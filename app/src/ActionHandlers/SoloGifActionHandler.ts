@@ -2,9 +2,9 @@ import ActionHandler from './ActionHandler'
 import SendSoloGifWorker from '../Workers/SendSoloGifWorker'
 
 class SoloGifActionHandler extends ActionHandler {
-  public handle (channelId: string) {
+  public async handle (channelId: string) {
     const sendSoloGifWorker = new SendSoloGifWorker(channelId)
-    sendSoloGifWorker.sendSoloGif(this.client)
+    await sendSoloGifWorker.sendSoloGif(this.client)
   }
 
   public isRecallable () {

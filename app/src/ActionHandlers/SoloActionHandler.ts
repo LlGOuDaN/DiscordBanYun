@@ -2,9 +2,9 @@ import ActionHandler from './ActionHandler'
 import SendSoloWorker from '../Workers/SendSoloWorker'
 
 class SoloActionHandler extends ActionHandler {
-  public handle (channelId: string) {
+  public async handle (channelId: string) {
     const sendSoloWorker = new SendSoloWorker(channelId)
-    sendSoloWorker.sendSolo(this.client)
+    await sendSoloWorker.sendSolo(this.client)
   }
 
   public isRecallable () {

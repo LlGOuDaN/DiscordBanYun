@@ -2,9 +2,9 @@ import ActionHandler from './ActionHandler'
 import ImageSearchWorker from '../Workers/ImageSearchWorker'
 
 class PicActionHandler extends ActionHandler {
-  public handle (channelId: string) {
+  public async handle (channelId: string) {
     const imageSearchWorker = new ImageSearchWorker(channelId)
-    imageSearchWorker.searchImg(this.client)
+    await imageSearchWorker.searchImg(this.client)
   }
 
   public isRecallable () {

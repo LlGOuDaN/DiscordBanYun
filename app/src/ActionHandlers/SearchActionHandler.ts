@@ -9,9 +9,9 @@ class SearchActionHandler extends ActionHandler {
       this.tag = tag
     }
 
-    public handle (channelId: string) {
+    public async handle (channelId: string) {
       const imageSearchWorker = new ImageSearchWorker(channelId)
-      imageSearchWorker.searchImg(this.client, this.tag)
+      await imageSearchWorker.searchImg(this.client, this.tag)
     }
 
     public isRecallable () {

@@ -9,9 +9,9 @@ class TagActionHandler extends ActionHandler {
       this.tag = tag
     }
 
-    public handle (channelId: string) {
+    public async handle (channelId: string) {
       const autoCompleteWorker = new AutoCompleteWorker(channelId)
-      autoCompleteWorker.autoComplete(this.client, this.tag)
+      await autoCompleteWorker.autoComplete(this.client, this.tag)
     }
 
     public isRecallable () {
