@@ -5,7 +5,7 @@ import LastMessageManager from './LastMessageManager'
 
 let HChannelId = '547540063584518144'
 const TestChannelId = '719346869611790376'
-const testing = true
+const testing = false
 
 class App {
   public run () {
