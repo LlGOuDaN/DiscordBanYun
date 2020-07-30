@@ -6,5 +6,9 @@ class TrendActionHandler extends ActionHandler {
     const trendTagsWorker = new TrendTagsWorker(channelId)
     trendTagsWorker.trendTags(this.client)
   }
+
+  public isRecallable () {
+    return true
+  }
 }
 export default TrendActionHandler

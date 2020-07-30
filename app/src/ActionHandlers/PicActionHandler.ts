@@ -6,5 +6,9 @@ class PicActionHandler extends ActionHandler {
     const imageSearchWorker = new ImageSearchWorker(channelId)
     imageSearchWorker.searchImg(this.client)
   }
+
+  public isRecallable () {
+    return true
+  }
 }
 export default PicActionHandler

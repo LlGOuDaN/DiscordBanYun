@@ -6,6 +6,10 @@ class SoloGifActionHandler extends ActionHandler {
     const sendSoloGifWorker = new SendSoloGifWorker(channelId)
     sendSoloGifWorker.sendSoloGif(this.client)
   }
+
+  public isRecallable () {
+    return true
+  }
 }
 
 export default SoloGifActionHandler

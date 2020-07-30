@@ -13,6 +13,10 @@ class TagActionHandler extends ActionHandler {
       const autoCompleteWorker = new AutoCompleteWorker(channelId)
       autoCompleteWorker.autoComplete(this.client, this.tag)
     }
+
+    public isRecallable () {
+      return true
+    }
 }
 
 export default TagActionHandler

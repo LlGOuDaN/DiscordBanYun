@@ -13,6 +13,10 @@ class SearchActionHandler extends ActionHandler {
       const imageSearchWorker = new ImageSearchWorker(channelId)
       imageSearchWorker.searchImg(this.client, this.tag)
     }
+
+    public isRecallable () {
+      return true
+    }
 }
 
 export default SearchActionHandler

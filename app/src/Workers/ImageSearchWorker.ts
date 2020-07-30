@@ -42,8 +42,8 @@ class ImageSearchWorker {
     }
 
     await PixImg(illusts[randomIndex].imageUrls.large, './r18.png')
-    await channel.send({ files: ['./r18.png'] })
-    await this.sendImageInfo(illusts[randomIndex], channel)
+    const imageInfo = await this.getImageInfo(illusts[randomIndex])
+    await channel.send(imageInfo, { files: ['./r18.png'] })
   }
 
   public async sendDailyR18Img (client: Client) {
@@ -55,8 +55,8 @@ class ImageSearchWorker {
     const illusts = json.illusts
     const randomIndex = datefns.getDay(new Date()) % 30
     await PixImg(illusts[randomIndex].imageUrls.large, './r18.png')
-    await channel.send({ files: ['./r18.png'] })
-    await this.sendImageInfo(illusts[randomIndex], channel)
+    const imageInfo = await this.getImageInfo(illusts[randomIndex])
+    await channel.send(imageInfo, { files: ['./r18.png'] })
   }
 
   private async searchIllustration (pix: Pix, tag: string, numOfFavs: string) {
@@ -79,9 +79,9 @@ class ImageSearchWorker {
     return json
   }
 
-  private async sendImageInfo (illust: any, channel: any) {
+  private async getImageInfo (illust: any) {
     let output = ''
-    output += illust.title + '\n'
+    output += '**' + illust.title + '**' + '\n'
     const tagList = illust.tags
     tagList.forEach(tagInfo => {
       output += tagInfo.name + ', '
@@ -91,7 +91,7 @@ class ImageSearchWorker {
     output += '\n'
     output += 'Number of Favorites: ' + illust.totalBookmarks + '\n'
     output += 'https://www.pixiv.net/artworks/' + illust.id
-    await channel.send(output)
+    return output
   }
 }
 

@@ -7,11 +7,11 @@ import TrendActionHandler from './ActionHandlers/TrendActionHandler'
 import SoloGifActionHandler from './ActionHandlers/SoloGifActionHandler'
 import SoloActionHandler from './ActionHandlers/SoloActionHandler'
 import PicTagActionHandler from './ActionHandlers/PicTagActionHandler'
+import RepeatActionHandler from './ActionHandlers/RepeatActionHandler'
 
 class ActionHandlerFactory {
     client: Client
     inputMessage:string
-
     constructor (client: Client, inputMessage: string) {
       this.client = client
       this.inputMessage = inputMessage
@@ -39,7 +39,9 @@ class ActionHandlerFactory {
       if (this.inputMessage === '!pictag') {
         return new PicTagActionHandler(this.client)
       }
-
+      if (this.inputMessage === '!+1') {
+        return new RepeatActionHandler(this.client)
+      }
       return new ActionHandler(this.client)
     }
 }
