@@ -6,6 +6,10 @@ class SoloActionHandler extends ActionHandler {
     const sendSoloWorker = new SendSoloWorker(channelId)
     sendSoloWorker.sendSolo(this.client)
   }
+
+  public isRecallable () {
+    return true
+  }
 }
 
 export default SoloActionHandler

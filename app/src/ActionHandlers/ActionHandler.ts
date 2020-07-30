@@ -1,4 +1,5 @@
 import { Client } from 'discord.js'
+import LastMessageManager from '../LastMessageManager'
 
 class ActionHandler {
    client: Client
@@ -9,6 +10,10 @@ class ActionHandler {
 
    public handle (channelId: string) {
      console.info('No Command Match on ' + channelId)
+   }
+
+   public isRecallable () {
+     return false
    }
 }
 
