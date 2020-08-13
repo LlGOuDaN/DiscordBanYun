@@ -1,11 +1,13 @@
-import { TextChannel, Client } from 'discord.js'
+import { TextChannel, Client, Channel } from 'discord.js'
 import ActionHandlerFactory from './ActionHandlerFactory'
 import ImageSearchWorker from './Workers/ImageSearchWorker'
 import LastMessageManager from './LastMessageManager'
+import { Console } from 'console'
 
 let HChannelId = '547540063584518144'
+const GREChannelId = '743336861409214555'
 const TestChannelId = '719346869611790376'
-const testing = false
+const testing = true
 
 class App {
   public run () {
@@ -20,13 +22,22 @@ class App {
       imageSearchWorker.sendDailyR18Img(client)
       this.setupScheduledSent(client)
     })
+
     // this.getSource()
     client.on('message', message => {
       // console.log(message.attachments.size)
-      if (message.attachments.size) {
+      if (message.attachments.size && message.member.user.username === 'BanYun') {
+        console.log('Sender username', message.member.user.username)
+        console.log('Sender equal banyun', message.member.user.username === 'BanYun')
         message.react('❤️')
       }
       const inputMessage = message.content
+      if (message.channel.id === GREChannelId) {
+        if (message.toString() === '!GRE') {
+          const LGDGREDGL = client.channels.cache.get(GREChannelId) as TextChannel
+          LGDGREDGL.send('李狗蛋做题了吗')
+        }
+      }
       if ((!testing || message.channel.id !== TestChannelId) && (testing || message.channel.id !== HChannelId)) {
         return
       }
@@ -42,9 +53,10 @@ class App {
       const message = reaction.message; const emoji = reaction.emoji
       if (message.attachments.size) {
         if (emoji.name === '❤️') {
-          console.log(user.username)
+          // console.log(user.username)
           const content = message.content.split('/')
-          console.log(content[content.length - 1])
+          // ID of the image
+          // console.log(content[content.length - 1])
         }
       }
     })
