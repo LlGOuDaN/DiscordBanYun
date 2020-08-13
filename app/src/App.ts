@@ -7,7 +7,7 @@ import { Console } from 'console'
 let HChannelId = '547540063584518144'
 const GREChannelId = '743336861409214555'
 const TestChannelId = '719346869611790376'
-const testing = true
+const testing = false
 
 class App {
   public run () {
