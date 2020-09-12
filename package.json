@@ -26,7 +26,7 @@
     "fs": "0.0.1-security",
     "nekos.life": "^2.0.7",
     "node": "^14.2.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "pixiv-api-client": "^0.22.0",
     "pixiv-app-api": "^1.2.1",
     "pixiv-img": "^1.0.0",
