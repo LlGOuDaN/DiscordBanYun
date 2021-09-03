@@ -14,9 +14,9 @@ Configuration:
 
 `DISCORD_BOT_TOKEN = YOUR DISCORD BOT TOKEN`
 
-`PIXIV_BLOCK_TAG = BLOCK PIC TAGS (etc. -腐向け%-創作BL%-R-18G%-ヒ腐マ)`
+`PIXIV_BLOCK_TAG = BLOCK PIC TAGS`
 
-`PIXIV_TAG = ANY Favorite TAGS DISCOVERED (etc. 極上の女体)`
+`PIXIV_TAG = ANY Favorite TAGS DISCOVERED`
 
 **-IMPORTANT! (P.S Please Include '%' Between TAGS )**
 
